@@ -11,13 +11,27 @@ console.log(teamMember)
 
 function App() {
   const [team, setTeam] = useState([]);
+  const [edit, setEdit] = useState({name:'', email:'',role:''})
+  const [formName, setFormName] = useState('Add Member')
   
 
   return (
     <div className="App">
      
-      <Form setTeam={setTeam} team={team}/>
-      <CardList team={team} />
+      <Form 
+        setTeam={setTeam} 
+        team={team}
+        edit={edit}
+        setEdit={setEdit}
+        formName={formName}
+        setFormName={setFormName}
+      />
+      <CardList 
+        team={team}
+        edit={edit}
+        setEdit={setEdit} 
+        setFormName={setFormName}
+      />
 
          
     
