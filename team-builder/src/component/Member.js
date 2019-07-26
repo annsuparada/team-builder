@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 
+
 const Member = props => {
+  const { name, email, role, id } = props.member;
+
   const [input, setInput] = useState({
-    name: "",
-    email: "",
-    role: "",
-    id: null
+    name: name,
+    email: email,
+    role: role,
+    id: id
   });
+  const [editing, setEditing] = useState(false);
+
+  const handleEdit = e => {
+    setEditing(!editing);
+  };
 
   const inputHandler = e => {
     console.log("target name", e.target.name);
@@ -14,20 +22,15 @@ const Member = props => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = e => {
+  const handleUpdate = e => {
     e.preventDefault();
-    props.add({ ...input, id: Math.random() });
-    setInput({
-      name: "",
-      email: "",
-      role: "",
-      id: null
-    });
+    props.update(input);
+    setEditing(false);
   };
-  console.log("props", props);
-  console.log("input", input);
-  return (
-    <form onSubmit={submitHandler}>
+
+  console.log("edit", editing);
+  return editing ? (
+    <form onSubmit={handleUpdate}>
       <h1>Add Member</h1>
       <div>
         <label htmlFor="Name">
@@ -60,6 +63,16 @@ const Member = props => {
       </div>
       <button>Add Member</button>
     </form>
+  ) : (
+    <div>
+      <h3>Name</h3>
+      <p>{name}</p>
+      <h3>Email</h3>
+      <p>{email}</p>
+      <h3>Role</h3>
+      <p>{role}</p>
+      <button onClick={handleEdit}>Edit</button>
+    </div>
   );
 };
 
